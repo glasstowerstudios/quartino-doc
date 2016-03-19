@@ -63,7 +63,7 @@
       
       <ul class="toc-footer">
         
-          <li><a href='#'>Request an Application Key</a></li>
+          <li><a href='mailto:jaywir3@gmail.com?subject=Quartino Developer Key&body=I would like to request a developer key.%0D%0A%0D%0AName:%0D%0AApp Name:%0D%0AEmail:%0D%0A'>Sign Up for an API Key</a></li>
         
           <li>Using Decanter by Martina Krasnayová from the Noun Project</li>
         
@@ -74,39 +74,108 @@
       <div class="content">
         <h1 id="introduction">Introduction</h1>
 
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
-
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
-
-<p>This example API documentation page was created with <a href="http://github.com/tripit/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
+<p>Welcome to Quartino! This is the web service for QR-Invited. Before working with the Quartino API, you&#39;ll need to register and get an application/api key from our administrators. This key serves to identify you as a developer within our systems, and to track usage of our API by application.</p>
 
 <h1 id="authentication">Authentication</h1>
 
+<p>Most of the API requires that a user be authenticated prior to making subsequent calls. Any call requiring an authorization token (auth token) requires that the authentication procedure be completed prior to that call. Authenticated API calls require an auth token and user id, which are obtained from the following endpoint:</p>
+
+<h2 id="login-with-username-and-password-in-body">Login with Username and Password in Body</h2>
+
 <blockquote>
-<p>To authorize, use this code:</p>
+<p>Example Request</p>
 </blockquote>
-<pre class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</pre><pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</pre><pre class="highlight shell"><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<pre class="highlight ruby"></pre><pre class="highlight shell">curl <span class="s2">"https://api.qr-invited-com/login"</span> --data <span class="s1">'{"username": "jbuffett", "password": "abcdef"}'</span> <span class="se">\</span>
+  -H <span class="s2">"X-Api-Key: mydeveloperkey"</span>
 </pre>
 <blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
+<p>Example Response</p>
 </blockquote>
+<pre class="highlight json"><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">888</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jimmy Buffett"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jbuffett"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jimmy.buffett@margaritaville.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"auth_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"auth_token_expire_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-04-18T14:46:27.000Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<p>This endpoint retrieves user data (including auth_token) for a specific user.</p>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<h3 id="http-request">HTTP Request</h3>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+<p><code>POST /login</code></p>
 
-<p><code>Authorization: meowmeowmeow</code></p>
+<h3 id="headers">Headers</h3>
+<table><thead><tr><th>Header</th>
+<th>Value</th>
+<th>Description</th>
+</tr></thead><tbody><tr><td>X-Api-Key</td>
+<td><code>api_key</code></td>
+<td>API key for your application</td>
+</tr></tbody></table>
+<h3 id="parameters">Parameters</h3>
+<table><thead><tr><th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr></thead><tbody><tr><td>username</td>
+<td>none</td>
+<td>The username of the user to authenticate with</td>
+</tr><tr><td>password</td>
+<td>none</td>
+<td>The password of the user to authenticate with</td>
+</tr></tbody></table>
+<p><aside class="note">
+  These parameters can be combined and sent as an authorization header using Base64-encoding. See <a href="#login-with-authorization-header">Login with Authorization Header</a> for more information.</aside></p>
 
-<p><aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+<h2 id="login-with-authorization-header">Login with Authorization Header</h2>
+
+<blockquote>
+<p>Example Request</p>
+</blockquote>
+<pre class="highlight ruby"></pre><pre class="highlight shell">curl <span class="s2">"https://api.qr-invited-com/login"</span> <span class="se">\</span>
+  -H <span class="s2">"X-Api-Key: mydeveloperkey"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Basic amJ1ZmZldHQ6YWJjZGVm"</span>
+</pre>
+<blockquote>
+<p>Example Response</p>
+</blockquote>
+<pre class="highlight json"><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">888</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jimmy Buffett"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jbuffett"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jimmy.buffett@margaritaville.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"auth_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"auth_token_expire_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-04-18T14:46:27.000Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<p>This endpoint retrieves user data (including auth_token) for a specific user.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code>POST /login</code></p>
+
+<h3 id="headers">Headers</h3>
+<table><thead><tr><th>Header</th>
+<th>Value</th>
+<th>Description</th>
+</tr></thead><tbody><tr><td>X-Api-Key</td>
+<td><code>api_key</code></td>
+<td>API key for your application</td>
+</tr><tr><td>Authorization</td>
+<td>Basic <code>base64(username + &quot;:&quot; + password)</code></td>
+<td>Base64-encoded username and password</td>
+</tr></tbody></table>
+<h3 id="parameters">Parameters</h3>
+
+<p>No parameters are required for this API method.</p>
+
+<p><aside class="note">
+  This login can also be sent in separate username/password format in the body. See <a href="#login-with-username-and-password-in-body">Login with Username and Password in Body</a> for more information
 </aside></p>
 
 <h1 id="kittens">Kittens</h1>
