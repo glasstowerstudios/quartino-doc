@@ -23,15 +23,15 @@ Most of the API requires that a user be authenticated prior to making subsequent
 > Example Request
 
 ```ruby
-  # Note: These examples use a QuartinoRestClient object which has not yet been
-  #       released as a separate library. If you desire the implementation for
-  #       this, please email Scott at jaywir3@gmail.com.
-  rest_client = QuartinoRestClient.new
-  response = rest_client.login username, password
+# Note: These examples use a QuartinoRestClient object which has not yet been
+#       released as a separate library. If you desire the implementation for
+#       this, please email Scott at jaywir3@gmail.com.
+rest_client = QuartinoRestClient.new
+response = rest_client.login username, password
 ```
 
 ```shell
-curl "<%= @api_prefix %>/login" --data '{"username": "jbuffett", "password": "abcdef"}' \
+curl -X POST "<%= @api_prefix %>/login" --data '{"username": "jbuffett", "password": "abcdef"}' \
   -H "X-Api-Key: <%= @api_key %>"
 ```
 
@@ -39,7 +39,7 @@ curl "<%= @api_prefix %>/login" --data '{"username": "jbuffett", "password": "ab
 
 ```json
 
-<%= print_json data.objects['user'] %>
+<%= print_json data.objects['login'] %>
 
 ```
 
@@ -49,13 +49,13 @@ This endpoint retrieves user data (including auth_token) for a specific user.
 
 `POST /login`
 
-### Headers
+### Request Headers
 
 Header    | Value   | Description
 --------- | ------- | -----------
 X-Api-Key | `api_key` | API key for your application |
 
-### Parameters
+### Request Parameters
 
 Parameter | Default | Description
 --------- | ------- | -----------
@@ -70,15 +70,15 @@ password | none | The password of the user to authenticate with
 > Example Request
 
 ```ruby
-  # Note: These examples use a QuartinoRestClient object which has not yet been
-  #       released as a separate library. If you desire the implementation for
-  #       this, please email Scott at jaywir3@gmail.com.
-  rest_client = QuartinoRestClient.new
-  response = rest_client.login username, password
+# Note: These examples use a QuartinoRestClient object which has not yet been
+#       released as a separate library. If you desire the implementation for
+#       this, please email Scott at jaywir3@gmail.com.
+rest_client = QuartinoRestClient.new
+response = rest_client.login username, password
 ```
 
 ```shell
-curl "<%= @api_prefix %>/login" \
+curl _X POST "<%= @api_prefix %>/login" \
   -H "X-Api-Key: <%= @api_key %>" \
   -H "Authorization: Basic amJ1ZmZldHQ6YWJjZGVm"
 ```
@@ -87,7 +87,7 @@ curl "<%= @api_prefix %>/login" \
 
 ```json
 
-<%= print_json data.objects['user'] %>
+<%= print_json data.objects['login'] %>
 
 ```
 
@@ -97,14 +97,14 @@ This endpoint retrieves user data (including auth_token) for a specific user.
 
 `POST /login`
 
-### Headers
+### Request Headers
 
 Header    | Value   | Description
 --------- | ------- | -----------
 X-Api-Key | `api_key` | API key for your application |
 Authorization | Basic `base64(username + ":" + password)` | Base64-encoded username and password
 
-### Parameters
+### Request Parameters
 
 No parameters are required for this API method.
 
@@ -112,118 +112,13 @@ No parameters are required for this API method.
   This login can also be sent in separate username/password format in the body. See [Login with Username and Password in Body](#login-with-username-and-password-in-body) for more information
 </aside>
 
-# Kittens
+# Users
 
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import 'kittn'
-
-api = Kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Isis",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import 'kittn'
-
-api = Kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/3"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Isis",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the cat to retrieve
+<%= partial "endpoints/users" %>
 
 # Errors
 
 The Quartino API uses the following error codes:
-
 
 Error Code | Meaning
 ---------- | -------

@@ -40,6 +40,7 @@ page "*" do
   @api_prefix = "https://api.qr-invited-com"
   @api_key = "mydeveloperkey"
   @auth_token = "anauthtoken"
+  @user_id = 88
   @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(), {})
 end
 

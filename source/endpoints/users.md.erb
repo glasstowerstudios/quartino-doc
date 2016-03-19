@@ -1,0 +1,105 @@
+## Get All Users
+
+> Example Request
+
+```ruby
+# Note: These examples use a QuartinoRestClient object which has not yet been
+#       released as a separate library. If you desire the implementation for
+#       this, please email Scott at jaywir3@gmail.com.
+rest_client = QuartinoRestClient.new
+response = rest_client.list_users(@authenticated_user)
+```
+
+```shell
+curl <%= @api_prefix %>/users \
+  -H "Authorization: Basic aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+  -H "X-UserId: 888"
+```
+
+> Example Response
+
+<% json do %>
+[
+  <%= print_json(data.objects['user']) %>,
+  <%= print_json(data.objects['user'], :include => {
+    'id' => 1234,
+    'name' => 'Michael Utley',
+    'username' => 'misterutley01',
+    'email' => 'michael.utley@margaritaville.com',
+    'role' => 'user'
+  }) %>
+]
+<% end %>
+
+Retrieve all users in the system, without authentication information.
+
+This is a listing of all users, but it does not include authentication information (e.g. passwords, password digests, authentication tokens, etc...).
+
+<aside class="warning">This endpoint is available to all authenticated users of the system, but non-admins will only be able to view users within their respective `Account`(s).</aside>
+
+### HTTP Request
+
+`GET <%= @api_prefix %>/users`
+
+### Request Headers
+
+Header    | Value   | Description
+--------- | ------- | -----------
+Authorization | Bearer `auth_token` | Authorization token obtained via authentication mechanism (described above) |
+X-UserId | `user_id` | User id of authenticated user
+
+### Request Parameters
+
+No parameters are required for this API call.
+
+## Get a Specific User
+
+> Example Request
+
+```ruby
+# Note: These examples use a QuartinoRestClient object which has not yet been
+#       released as a separate library. If you desire the implementation for
+#       this, please email Scott at jaywir3@gmail.com.
+rest_client = QuartinoRestClient.new
+id = 1234
+response = rest_client.get_user(@authenticated_user, id)
+```
+
+```shell
+curl <%= @api_prefix %>/users/1234 \
+  -H "Authorization: Basic aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+  -H "X-UserId: 888"
+```
+
+> Example Response
+
+```json
+<%= print_json(data.objects['user'], :include => {
+  'id' => 1234,
+  'name' => 'Michael Utley',
+  'username' => 'misterutley01',
+  'email' => 'michael.utley@margaritaville.com',
+  'role' => 'user'
+}) %>
+```
+
+Retrieves a specific user, by that user's id.
+
+<aside class="warning">If the user authenticated is not an `admin`, then it's possible that a 403 Forbidden will be returned if that user is not associated with the account for which the requested user is associated.</aside>
+
+### HTTP Request
+
+`GET <%= @api_prefix %>/users/<ID>`
+
+### Request Headers
+
+Header    | Value   | Description
+--------- | ------- | -----------
+Authorization | Bearer `auth_token` | Authorization token obtained via authentication mechanism (described above) |
+X-UserId | `user_id` | User id of authenticated user
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+ID | The ID of the user to retrieve
