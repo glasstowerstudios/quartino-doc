@@ -1,0 +1,47 @@
+{
+  "user" : {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier for this user",
+      "value": 888,
+      "show": "true"
+    },
+    "name": {
+      "type": "string",
+      "description": "Full name of the user",
+      "value": "Jimmy Buffett",
+      "show": "true"
+    },
+    "username": {
+      "type": "string",
+      "description": "Username that the user uses to authenticate",
+      "value": "jbuffett",
+      "show": "true"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email address for the user",
+      "value": "jimmy.buffett@margaritaville.com",
+      "show": "true"
+    },
+    "role": {
+      "type": "string",
+      "description": "The user's role",
+      "value": 1,
+      "show": true
+    },
+    "auth_token": {
+      "type": "string",
+      "description": "User's authentication token which can be used for subsequent requests",
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "show": "true"
+    },
+
+    "auth_token_expire_date": {
+      "type": "date",
+      "description": "The date at which the user's auth token expires",
+      "value": "2016-04-18T14:46:27.000Z",
+      "show": "true"
+    }
+  }
+}

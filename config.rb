@@ -21,10 +21,10 @@ set :fonts_dir, 'fonts'
 # reason unless we put it in the renderer's constructor.
 set :markdown_engine, :redcarpet
 set :markdown,
-      :fenced_code_blocks => true, 
-      :smartypants => true, 
-      :disable_indented_code_blocks => true, 
-      :prettify => true, 
+      :fenced_code_blocks => true,
+      :smartypants => true,
+      :disable_indented_code_blocks => true,
+      :prettify => true,
       :tables => true,
       :no_intra_emphasis => true,
       :renderer => APIHtmlRenderer.new(:with_toc_data => true)
@@ -37,9 +37,9 @@ require "lib/code_colors"
 
 # Settings for the main page
 page "*" do
-  @api_prefix = "https://api.wheniwork.com"
-  @wiw_key = "iworksoharditsnotfunny"
-  @wiw_token = "ilovemyboss"
+  @api_prefix = "https://api.qr-invited-com"
+  @api_key = "mydeveloperkey"
+  @auth_token = "anauthtoken"
   @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(), {})
 end
 
@@ -65,4 +65,3 @@ configure :build do
   # Or use a different image path
   # set :http_prefix, "/Content/images/"
 end
-
