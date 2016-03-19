@@ -6,7 +6,7 @@ language_tabs:
   - ruby: Ruby
 
 toc_footers:
-  - <a href='mailto:jaywir3@gmail.com?subject=Quartino Developer Key&body=I would like to request a developer key.%0D%0A%0D%0AName:%0D%0AApp Name:%0D%0AEmail:%0D%0A'>Sign Up for an API Key</a>
+  - <a href='mailto:jaywir3@gmail.com?subject=Quartino Developer Key&body=I would like to request a Quartino API key.%0D%0A%0D%0AName:%0D%0AApp Name:%0D%0AEmail:%0D%0A'>Request an API Key</a>
   - Using Decanter by Martina Krasnayová from the Noun Project
 ---
 
@@ -23,6 +23,11 @@ Most of the API requires that a user be authenticated prior to making subsequent
 > Example Request
 
 ```ruby
+  # Note: These examples use a QuartinoRestClient object which has not yet been
+  #       released as a separate library. If you desire the implementation for
+  #       this, please email Scott at jaywir3@gmail.com.
+  rest_client = QuartinoRestClient.new
+  response = rest_client.login username, password
 ```
 
 ```shell
@@ -65,6 +70,11 @@ password | none | The password of the user to authenticate with
 > Example Request
 
 ```ruby
+  # Note: These examples use a QuartinoRestClient object which has not yet been
+  #       released as a separate library. If you desire the implementation for
+  #       this, please email Scott at jaywir3@gmail.com.
+  rest_client = QuartinoRestClient.new
+  response = rest_client.login username, password
 ```
 
 ```shell
