@@ -85,12 +85,12 @@
 <blockquote>
 <p>Example Request</p>
 </blockquote>
-<pre class="highlight ruby">  <span class="c1"># Note: These examples use a QuartinoRestClient object which has not yet been</span>
-  <span class="c1">#       released as a separate library. If you desire the implementation for</span>
-  <span class="c1">#       this, please email Scott at jaywir3@gmail.com.</span>
-  <span class="n">rest_client</span> <span class="o">=</span> <span class="no">QuartinoRestClient</span><span class="p">.</span><span class="nf">new</span>
-  <span class="n">response</span> <span class="o">=</span> <span class="n">rest_client</span><span class="p">.</span><span class="nf">login</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span>
-</pre><pre class="highlight shell">curl <span class="s2">"https://api.qr-invited-com/login"</span> --data <span class="s1">'{"username": "jbuffett", "password": "abcdef"}'</span> <span class="se">\</span>
+<pre class="highlight ruby"><span class="c1"># Note: These examples use a QuartinoRestClient object which has not yet been</span>
+<span class="c1">#       released as a separate library. If you desire the implementation for</span>
+<span class="c1">#       this, please email Scott at jaywir3@gmail.com.</span>
+<span class="n">rest_client</span> <span class="o">=</span> <span class="no">QuartinoRestClient</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">rest_client</span><span class="p">.</span><span class="nf">login</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span>
+</pre><pre class="highlight shell">curl -X POST <span class="s2">"https://api.qr-invited-com/login"</span> --data <span class="s1">'{"username": "jbuffett", "password": "abcdef"}'</span> <span class="se">\</span>
   -H <span class="s2">"X-Api-Key: mydeveloperkey"</span>
 </pre>
 <blockquote>
@@ -113,7 +113,7 @@
 
 <p><code>POST /login</code></p>
 
-<h3 id="headers">Headers</h3>
+<h3 id="request-headers">Request Headers</h3>
 <table><thead><tr><th>Header</th>
 <th>Value</th>
 <th>Description</th>
@@ -121,7 +121,7 @@
 <td><code>api_key</code></td>
 <td>API key for your application</td>
 </tr></tbody></table>
-<h3 id="parameters">Parameters</h3>
+<h3 id="request-parameters">Request Parameters</h3>
 <table><thead><tr><th>Parameter</th>
 <th>Default</th>
 <th>Description</th>
@@ -140,12 +140,12 @@
 <blockquote>
 <p>Example Request</p>
 </blockquote>
-<pre class="highlight ruby">  <span class="c1"># Note: These examples use a QuartinoRestClient object which has not yet been</span>
-  <span class="c1">#       released as a separate library. If you desire the implementation for</span>
-  <span class="c1">#       this, please email Scott at jaywir3@gmail.com.</span>
-  <span class="n">rest_client</span> <span class="o">=</span> <span class="no">QuartinoRestClient</span><span class="p">.</span><span class="nf">new</span>
-  <span class="n">response</span> <span class="o">=</span> <span class="n">rest_client</span><span class="p">.</span><span class="nf">login</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span>
-</pre><pre class="highlight shell">curl <span class="s2">"https://api.qr-invited-com/login"</span> <span class="se">\</span>
+<pre class="highlight ruby"><span class="c1"># Note: These examples use a QuartinoRestClient object which has not yet been</span>
+<span class="c1">#       released as a separate library. If you desire the implementation for</span>
+<span class="c1">#       this, please email Scott at jaywir3@gmail.com.</span>
+<span class="n">rest_client</span> <span class="o">=</span> <span class="no">QuartinoRestClient</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">rest_client</span><span class="p">.</span><span class="nf">login</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span>
+</pre><pre class="highlight shell">curl _X POST <span class="s2">"https://api.qr-invited-com/login"</span> <span class="se">\</span>
   -H <span class="s2">"X-Api-Key: mydeveloperkey"</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Basic amJ1ZmZldHQ6YWJjZGVm"</span>
 </pre>
@@ -169,7 +169,7 @@
 
 <p><code>POST /login</code></p>
 
-<h3 id="headers">Headers</h3>
+<h3 id="request-headers">Request Headers</h3>
 <table><thead><tr><th>Header</th>
 <th>Value</th>
 <th>Description</th>
@@ -180,7 +180,7 @@
 <td>Basic <code>base64(username + &quot;:&quot; + password)</code></td>
 <td>Base64-encoded username and password</td>
 </tr></tbody></table>
-<h3 id="parameters">Parameters</h3>
+<h3 id="request-parameters">Request Parameters</h3>
 
 <p>No parameters are required for this API method.</p>
 
@@ -188,97 +188,117 @@
   This login can also be sent in separate username/password format in the body. See <a href="#login-with-username-and-password-in-body">Login with Username and Password in Body</a> for more information
 </aside></p>
 
-<h1 id="kittens">Kittens</h1>
+<h1 id="users">Users</h1>
 
-<h2 id="get-all-kittens">Get All Kittens</h2>
-<pre class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h2 id="get-all-users">Get All Users</h2>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</pre><pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</pre><pre class="highlight shell">curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<blockquote>
+<p>Example Request</p>
+</blockquote>
+<pre class="highlight ruby"><span class="c1"># Note: These examples use a QuartinoRestClient object which has not yet been</span>
+<span class="c1">#       released as a separate library. If you desire the implementation for</span>
+<span class="c1">#       this, please email Scott at jaywir3@gmail.com.</span>
+<span class="n">rest_client</span> <span class="o">=</span> <span class="no">QuartinoRestClient</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">rest_client</span><span class="p">.</span><span class="nf">list_users</span><span class="p">(</span><span class="vi">@authenticated_user</span><span class="p">)</span>
+</pre><pre class="highlight shell">curl https://api.qr-invited-com/users <span class="se">\</span>
+  -H <span class="s2">"Authorization: Basic aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"</span> <span class="se">\</span>
+  -H <span class="s2">"X-UserId: 888"</span>
 </pre>
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Example Response</p>
 </blockquote>
 <pre class="highlight json"><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">888</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jimmy Buffett"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jbuffett"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jimmy.buffett@margaritaville.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isis"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Michael Utley"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"misterutley01"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michael.utley@margaritaville.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></pre>
-<p>This endpoint retrieves all kittens.</p>
+<p>Retrieve all users in the system, without authentication information.</p>
+
+<p>This is a listing of all users, but it does not include authentication information (e.g. passwords, password digests, authentication tokens, etc...).</p>
+
+<p><aside class="warning">This endpoint is available to all authenticated users of the system, but non-admins will only be able to view users within their respective <code>Account</code>(s).</aside></p>
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code>GET http://example.com/kittens</code></p>
+<p><code>GET https://api.qr-invited-com/users</code></p>
 
-<h3 id="query-parameters">Query Parameters</h3>
-<table><thead><tr><th>Parameter</th>
-<th>Default</th>
+<h3 id="request-headers">Request Headers</h3>
+<table><thead><tr><th>Header</th>
+<th>Value</th>
 <th>Description</th>
-</tr></thead><tbody><tr><td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
-</tr><tr><td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+</tr></thead><tbody><tr><td>Authorization</td>
+<td>Bearer <code>auth_token</code></td>
+<td>Authorization token obtained via authentication mechanism (described above)</td>
+</tr><tr><td>X-UserId</td>
+<td><code>user_id</code></td>
+<td>User id of authenticated user</td>
 </tr></tbody></table>
-<p><aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside></p>
+<h3 id="request-parameters">Request Parameters</h3>
 
-<h2 id="get-a-specific-kitten">Get a Specific Kitten</h2>
-<pre class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
+<p>No parameters are required for this API call.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</pre><pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
+<h2 id="get-a-specific-user">Get a Specific User</h2>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</pre><pre class="highlight shell">curl <span class="s2">"http://example.com/api/kittens/3"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<blockquote>
+<p>Example Request</p>
+</blockquote>
+<pre class="highlight ruby"><span class="c1"># Note: These examples use a QuartinoRestClient object which has not yet been</span>
+<span class="c1">#       released as a separate library. If you desire the implementation for</span>
+<span class="c1">#       this, please email Scott at jaywir3@gmail.com.</span>
+<span class="n">rest_client</span> <span class="o">=</span> <span class="no">QuartinoRestClient</span><span class="p">.</span><span class="nf">new</span>
+<span class="nb">id</span> <span class="o">=</span> <span class="mi">1234</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">rest_client</span><span class="p">.</span><span class="nf">get_user</span><span class="p">(</span><span class="vi">@authenticated_user</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+</pre><pre class="highlight shell">curl https://api.qr-invited-com/users/1234 <span class="se">\</span>
+  -H <span class="s2">"Authorization: Basic aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"</span> <span class="se">\</span>
+  -H <span class="s2">"X-UserId: 888"</span>
 </pre>
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Example Response</p>
 </blockquote>
 <pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isis"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Michael Utley"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"misterutley01"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michael.utley@margaritaville.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
-<p>This endpoint retrieves a specific kitten.</p>
+<p>Retrieves a specific user, by that user&#39;s id.</p>
 
-<p><aside class="warning">If you&#39;re not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside></p>
+<p><aside class="warning">If the user authenticated is not an <code>admin</code>, then it&#39;s possible that a 403 Forbidden will be returned if that user is not associated with the account for which the requested user is associated.</aside></p>
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
+<p><code>GET https://api.qr-invited-com/users/&lt;ID&gt;</code></p>
 
+<h3 id="request-headers">Request Headers</h3>
+<table><thead><tr><th>Header</th>
+<th>Value</th>
+<th>Description</th>
+</tr></thead><tbody><tr><td>Authorization</td>
+<td>Bearer <code>auth_token</code></td>
+<td>Authorization token obtained via authentication mechanism (described above)</td>
+</tr><tr><td>X-UserId</td>
+<td><code>user_id</code></td>
+<td>User id of authenticated user</td>
+</tr></tbody></table>
 <h3 id="url-parameters">URL Parameters</h3>
 <table><thead><tr><th>Parameter</th>
 <th>Description</th>
 </tr></thead><tbody><tr><td>ID</td>
-<td>The ID of the cat to retrieve</td>
+<td>The ID of the user to retrieve</td>
 </tr></tbody></table>
 <h1 id="errors">Errors</h1>
 

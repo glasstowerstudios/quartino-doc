@@ -1,0 +1,175 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>API Documentation</title>
+
+    <link href="../stylesheets/screen.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="../stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="../javascripts/all.js" type="text/javascript"></script>
+
+    <script>
+      $(function() {
+        var toc = $("#toc").tocify({
+          selectors: "h1,h2",
+          extendPage: false,
+          theme: "none",
+          smoothScroll: false,
+          showEffectSpeed: 0,
+          hideEffectSpeed: 180,
+          ignoreSelector: ".toc-ignore",
+          hashGenerator: 'pretty',
+          highlightOffset: 60,
+          scrollTo: -2,
+          scrollHistory: true,
+          hashGenerator: function(text, element) {
+            return element[0].getAttribute('id');
+          }
+        }).data("toc-tocify");
+        // Hack to make already open sections to start opened,
+        // instead of displaying an ugly animation
+        setTimeout(function() {
+          toc.setOption("showEffectSpeed", 180);
+        },50);
+        setupLanguages([
+          
+        ]);
+      });
+    </script>
+  </head>
+
+  <body class="endpoints endpoints_users">
+    <div class="tocify-wrapper">
+      <img src="../images/logo.png" />
+      <div id="toc">
+      </div>
+      
+    </div>
+    <div class="page-wrapper">
+      <div class="content">
+        <h2 id="get-all-users">Get All Users</h2>
+
+<blockquote>
+<p>Example Request</p>
+</blockquote>
+<pre class="highlight ruby"><span class="c1"># Note: These examples use a QuartinoRestClient object which has not yet been</span>
+<span class="c1">#       released as a separate library. If you desire the implementation for</span>
+<span class="c1">#       this, please email Scott at jaywir3@gmail.com.</span>
+<span class="n">rest_client</span> <span class="o">=</span> <span class="no">QuartinoRestClient</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">rest_client</span><span class="p">.</span><span class="nf">list_users</span><span class="p">(</span><span class="vi">@authenticated_user</span><span class="p">)</span>
+</pre><pre class="highlight shell">curl https://api.qr-invited-com/users <span class="se">\</span>
+  -H <span class="s2">"Authorization: Basic aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"</span> <span class="se">\</span>
+  -H <span class="s2">"X-UserId: 888"</span>
+</pre>
+<blockquote>
+<p>Example Response</p>
+</blockquote>
+<pre class="highlight json"><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">888</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jimmy Buffett"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jbuffett"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jimmy.buffett@margaritaville.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Michael Utley"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"misterutley01"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michael.utley@margaritaville.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></pre>
+<p>Retrieve all users in the system, without authentication information.</p>
+
+<p>This is a listing of all users, but it does not include authentication information (e.g. passwords, password digests, authentication tokens, etc...).</p>
+
+<p><aside class="warning">This endpoint is available to all authenticated users of the system, but non-admins will only be able to view users within their respective <code>Account</code>(s).</aside></p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code>GET https://api.qr-invited-com/users</code></p>
+
+<h3 id="request-headers">Request Headers</h3>
+<table><thead><tr><th>Header</th>
+<th>Value</th>
+<th>Description</th>
+</tr></thead><tbody><tr><td>Authorization</td>
+<td>Bearer <code>auth_token</code></td>
+<td>Authorization token obtained via authentication mechanism (described above)</td>
+</tr><tr><td>X-UserId</td>
+<td><code>user_id</code></td>
+<td>User id of authenticated user</td>
+</tr></tbody></table>
+<h3 id="request-parameters">Request Parameters</h3>
+
+<p>No parameters are required for this API call.</p>
+
+<h2 id="get-a-specific-user">Get a Specific User</h2>
+
+<blockquote>
+<p>Example Request</p>
+</blockquote>
+<pre class="highlight ruby"><span class="c1"># Note: These examples use a QuartinoRestClient object which has not yet been</span>
+<span class="c1">#       released as a separate library. If you desire the implementation for</span>
+<span class="c1">#       this, please email Scott at jaywir3@gmail.com.</span>
+<span class="n">rest_client</span> <span class="o">=</span> <span class="no">QuartinoRestClient</span><span class="p">.</span><span class="nf">new</span>
+<span class="nb">id</span> <span class="o">=</span> <span class="mi">1234</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">rest_client</span><span class="p">.</span><span class="nf">get_user</span><span class="p">(</span><span class="vi">@authenticated_user</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+</pre><pre class="highlight shell">curl https://api.qr-invited-com/users/1234 <span class="se">\</span>
+  -H <span class="s2">"Authorization: Basic aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"</span> <span class="se">\</span>
+  -H <span class="s2">"X-UserId: 888"</span>
+</pre>
+<blockquote>
+<p>Example Response</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Michael Utley"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"misterutley01"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michael.utley@margaritaville.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<p>Retrieves a specific user, by that user&#39;s id.</p>
+
+<p><aside class="warning">If the user authenticated is not an <code>admin</code>, then it&#39;s possible that a 403 Forbidden will be returned if that user is not associated with the account for which the requested user is associated.</aside></p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code>GET https://api.qr-invited-com/users/&lt;ID&gt;</code></p>
+
+<h3 id="request-headers">Request Headers</h3>
+<table><thead><tr><th>Header</th>
+<th>Value</th>
+<th>Description</th>
+</tr></thead><tbody><tr><td>Authorization</td>
+<td>Bearer <code>auth_token</code></td>
+<td>Authorization token obtained via authentication mechanism (described above)</td>
+</tr><tr><td>X-UserId</td>
+<td><code>user_id</code></td>
+<td>User id of authenticated user</td>
+</tr></tbody></table>
+<h3 id="url-parameters">URL Parameters</h3>
+<table><thead><tr><th>Parameter</th>
+<th>Description</th>
+</tr></thead><tbody><tr><td>ID</td>
+<td>The ID of the user to retrieve</td>
+</tr></tbody></table>
+      </div>
+      <div class="dark-box">
+        <div id="lang-selector">
+          
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
