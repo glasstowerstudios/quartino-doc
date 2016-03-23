@@ -54,3 +54,54 @@ X-UserId | `user_id` | User id of authenticated user. This user must have the ro
 ### Request Parameters
 
 No parameters are required for this API call.
+
+## Get a Specific App
+
+> Example Request
+
+```ruby
+# Note: These examples use a QuartinoRestClient object which has not yet been
+#       released as a separate library. If you desire the implementation for
+#       this, please email Scott at jaywir3@gmail.com.
+rest_client = QuartinoRestClient.new
+id = 9082
+response = rest_client.get_app(@authenticated_user, id)
+```
+
+```shell
+curl <%= @api_prefix %>/apps/9082 \
+  -H "Authorization: Basic aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+  -H "X-UserId: 888"
+```
+
+> Example Response
+
+```json
+<%= print_json(data.objects['app'], :include => {
+  'id' => 9082,
+  'app_name' => 'My Quartino App',
+  'requester_email' => 'some.user@qr-invited.com',
+  'api_key' => '30ef8ba034adeb693899b65d74e169dba40f3211'
+}) %>
+```
+
+Retrieves a specific app, by that app's id.
+
+<aside class="warning">If the user authenticated is not an admin, then it's possible that a 403 Forbidden will be returned if the authenticated user is not the owner of the requested app.</aside>
+
+### HTTP Request
+
+`GET <%= @api_prefix %>/apps/<ID>`
+
+### Request Headers
+
+Header    | Value   | Description
+--------- | ------- | -----------
+Authorization | Bearer `auth_token` | Authorization token obtained via authentication mechanism (described above) |
+X-UserId | `user_id` | User id of authenticated user
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+ID | The ID of the app to retrieve

@@ -85,7 +85,7 @@ curl <%= @api_prefix %>/users/1234 \
 
 Retrieves a specific user, by that user's id.
 
-<aside class="warning">If the user authenticated is not an `admin`, then it's possible that a 403 Forbidden will be returned if that user is not associated with the account for which the requested user is associated.</aside>
+<aside class="warning">If the authenticated user is not an admin, then it's possible that a 403 Forbidden will be returned if the id given corresponds to a user that is not associated with one of the Account objects for which the authenticated user is an administrator.</aside>
 
 ### HTTP Request
 
