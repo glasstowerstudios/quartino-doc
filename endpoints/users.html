@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
   <head>
@@ -10,10 +9,10 @@
     <!-- Use title if it's in the page YAML frontmatter -->
     <title>API Documentation</title>
 
-    <link href="../stylesheets/screen.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="../stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
+    <link href="../stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="../stylesheets/print.css" rel="stylesheet" media="print" />
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="../javascripts/all.js" type="text/javascript"></script>
+    <script src="../javascripts/all.js"></script>
 
     <script>
       $(function() {
@@ -39,7 +38,6 @@
           toc.setOption("showEffectSpeed", 180);
         },50);
         setupLanguages([
-          
         ]);
       });
     </script>
@@ -50,7 +48,6 @@
       <img src="../images/logo.png" />
       <div id="toc">
       </div>
-      
     </div>
     <div class="page-wrapper">
       <div class="content">
@@ -59,40 +56,43 @@
 <blockquote>
 <p>Example Request</p>
 </blockquote>
-<pre class="highlight ruby"><span class="c1"># Note: These examples use a QuartinoRestClient object which has not yet been</span>
+<pre class="highlight ruby"><code><span class="c1"># Note: These examples use a QuartinoRestClient object which has not yet been</span>
 <span class="c1">#       released as a separate library. If you desire the implementation for</span>
 <span class="c1">#       this, please email Scott at jaywir3@gmail.com.</span>
 <span class="n">rest_client</span> <span class="o">=</span> <span class="no">QuartinoRestClient</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">rest_client</span><span class="p">.</span><span class="nf">list_users</span><span class="p">(</span><span class="vi">@authenticated_user</span><span class="p">)</span>
-</pre><pre class="highlight shell">curl https://api.qr-invited-com/users <span class="se">\</span>
+</code></pre>
+<pre class="highlight shell"><code>curl https://api.qr-invited-com/users <span class="se">\</span>
   -H <span class="s2">"Authorization: Basic aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"</span> <span class="se">\</span>
   -H <span class="s2">"X-UserId: 888"</span>
-</pre>
+</code></pre>
+
 <blockquote>
 <p>Example Response</p>
 </blockquote>
-<pre class="highlight json"><span class="p">[</span><span class="w">
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">888</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jimmy Buffett"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jbuffett"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jimmy.buffett@margaritaville.com"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">888</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jimmy Buffett"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jbuffett"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jimmy.buffett@margaritaville.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Michael Utley"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"misterutley01"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michael.utley@margaritaville.com"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Michael Utley"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"misterutley01"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michael.utley@margaritaville.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
-</span></pre>
+</span></code></pre>
+
 <p>Retrieve all users in the system, without authentication information.</p>
 
 <p>This is a listing of all users, but it does not include authentication information (e.g. passwords, password digests, authentication tokens, etc...).</p>
 
-<p><aside class="warning">This endpoint is available to all authenticated users of the system, but non-admins will only be able to view users within their respective <code>Account</code>(s).</aside></p>
+<aside class="warning">This endpoint is available to all authenticated users of the system, but non-admins will only be able to view users within their respective `Account`(s).</aside>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -118,30 +118,33 @@
 <blockquote>
 <p>Example Request</p>
 </blockquote>
-<pre class="highlight ruby"><span class="c1"># Note: These examples use a QuartinoRestClient object which has not yet been</span>
+<pre class="highlight ruby"><code><span class="c1"># Note: These examples use a QuartinoRestClient object which has not yet been</span>
 <span class="c1">#       released as a separate library. If you desire the implementation for</span>
 <span class="c1">#       this, please email Scott at jaywir3@gmail.com.</span>
 <span class="n">rest_client</span> <span class="o">=</span> <span class="no">QuartinoRestClient</span><span class="p">.</span><span class="nf">new</span>
 <span class="nb">id</span> <span class="o">=</span> <span class="mi">1234</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">rest_client</span><span class="p">.</span><span class="nf">get_user</span><span class="p">(</span><span class="vi">@authenticated_user</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
-</pre><pre class="highlight shell">curl https://api.qr-invited-com/users/1234 <span class="se">\</span>
+</code></pre>
+<pre class="highlight shell"><code>curl https://api.qr-invited-com/users/1234 <span class="se">\</span>
   -H <span class="s2">"Authorization: Basic aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"</span> <span class="se">\</span>
   -H <span class="s2">"X-UserId: 888"</span>
-</pre>
+</code></pre>
+
 <blockquote>
 <p>Example Response</p>
 </blockquote>
-<pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Michael Utley"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"misterutley01"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michael.utley@margaritaville.com"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="w">
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Michael Utley"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"misterutley01"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"michael.utley@margaritaville.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></pre>
+</span></code></pre>
+
 <p>Retrieves a specific user, by that user&#39;s id.</p>
 
-<p><aside class="warning">If the user authenticated is not an <code>admin</code>, then it&#39;s possible that a 403 Forbidden will be returned if that user is not associated with the account for which the requested user is associated.</aside></p>
+<aside class="warning">If the user authenticated is not an `admin`, then it's possible that a 403 Forbidden will be returned if that user is not associated with the account for which the requested user is associated.</aside>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -167,7 +170,6 @@
       </div>
       <div class="dark-box">
         <div id="lang-selector">
-          
         </div>
       </div>
     </div>
