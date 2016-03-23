@@ -1,0 +1,56 @@
+# Apps
+
+Applications, or Apps, are objects that define a remote application that is authorized to use the Quartino web services.
+
+<aside class="warning">Only properly authenticated administrators can add, remove, or list applications.</aside>
+
+## Listing Apps
+
+> Example Request
+
+```ruby
+# Note: These examples use a QuartinoRestClient object which has not yet been
+#       released as a separate library. If you desire the implementation for
+#       this, please email Scott at jaywir3@gmail.com.
+rest_client = QuartinoRestClient.new
+response = rest_client.list_apps(@authenticated_user)
+```
+
+```shell
+curl <%= @api_prefix %>/apps \
+  -H "Authorization: Basic aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" \
+  -H "X-UserId: 888"
+```
+
+> Example Response
+
+<% json do %>
+[
+  <%= print_json(data.objects['app']) %>,
+  <%= print_json(data.objects['app'], :include => {
+    'id' => 9082,
+    'app_name' => 'My Quartino App',
+    'requester_email' => 'some.user@qr-invited.com',
+    'api_key' => '30ef8ba034adeb693899b65d74e169dba40f3211'
+  }) %>
+]
+<% end %>
+
+List all apps in the system.
+
+<aside class="warning">This endpoint is not available to all users of the system. Only authenticated administrators are allowed to list apps in the system.</aside>
+
+### HTTP Request
+
+`GET <%= @api_prefix %>/apps`
+
+### Request Headers
+
+Header    | Value   | Description
+--------- | ------- | -----------
+Authorization | Bearer `auth_token` | Authorization token obtained via authentication mechanism (described above) |
+X-UserId | `user_id` | User id of authenticated user. This user must have the role of admin, or a 403 Forbidden will be sent back by the server.
+
+### Request Parameters
+
+No parameters are required for this API call.

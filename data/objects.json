@@ -76,5 +76,31 @@
       "value": "admin",
       "show": true
     }
+  },
+  "app" : {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier for this app",
+      "value": "5241",
+      "show": true
+    },
+    "app_name": {
+      "type": "string",
+      "description": "The name of the app",
+      "value": "Quartino Application",
+      "show": true
+    },
+    "requester_email": {
+      "type": "string",
+      "description": "The email of the user who originally requested the application",
+      "value": "someone@some-where.com",
+      "show": true
+    },
+    "api_key": {
+      "type": "string",
+      "description": "The API key used to authenticate the app to the Quartino system",
+      "value": "638999dba4d740211f330eaadef8bb60349b65e1",
+      "show": true
+    }
   }
 }
