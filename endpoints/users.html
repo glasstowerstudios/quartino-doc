@@ -51,7 +51,13 @@
     </div>
     <div class="page-wrapper">
       <div class="content">
-        <h2 id="get-all-users">Get All Users</h2>
+        <h1 id="users">Users</h1>
+
+<p>The User object describes an individual who can login to the QR-Invited system. It may be an account owner, a global administrator, or someone who has access to view the information on behalf of a particular client.</p>
+
+<p>Guests invited to an event through the QR-Invited system are not users.</p>
+
+<h2 id="get-all-users">Get All Users</h2>
 
 <blockquote>
 <p>Example Request</p>
@@ -104,7 +110,7 @@
 <th>Description</th>
 </tr></thead><tbody><tr><td>Authorization</td>
 <td>Bearer <code>auth_token</code></td>
-<td>Authorization token obtained via authentication mechanism (described above)</td>
+<td>Authorizatioqqwn token obtained via authentication mechanism (described above)</td>
 </tr><tr><td>X-UserId</td>
 <td><code>user_id</code></td>
 <td>User id of authenticated user</td>
@@ -144,7 +150,7 @@
 
 <p>Retrieves a specific user, by that user&#39;s id.</p>
 
-<aside class="warning">If the user authenticated is not an `admin`, then it's possible that a 403 Forbidden will be returned if that user is not associated with the account for which the requested user is associated.</aside>
+<aside class="warning">If the authenticated user is not an admin, then it's possible that a 403 Forbidden will be returned if the id given corresponds to a user that is not associated with one of the Account objects for which the authenticated user is an administrator.</aside>
 
 <h3 id="http-request">HTTP Request</h3>
 

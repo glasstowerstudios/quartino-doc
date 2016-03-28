@@ -65,7 +65,7 @@
 
 <p>Most of the API requires that a user be authenticated prior to making subsequent calls. Any call requiring an authorization token (auth token) requires that the authentication procedure be completed prior to that call. Authenticated API calls require an auth token and user id, which are obtained from the following endpoint:</p>
 
-<h2 id="login-with-username-and-password-in-body">Login with Username and Password in Body</h2>
+<h2 id="login">Login</h2>
 
 <blockquote>
 <p>Example Request</p>
@@ -76,8 +76,9 @@
 <span class="n">rest_client</span> <span class="o">=</span> <span class="no">QuartinoRestClient</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">rest_client</span><span class="p">.</span><span class="nf">login</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span>
 </code></pre>
-<pre class="highlight shell"><code>curl -X POST <span class="s2">"https://api.qr-invited-com/login"</span> --data <span class="s1">'{"username": "jbuffett", "password": "abcdef"}'</span> <span class="se">\</span>
-  -H <span class="s2">"X-Api-Key: mydeveloperkey"</span>
+<pre class="highlight shell"><code>curl _X GET <span class="s2">"https://api.qr-invited-com/login"</span> <span class="se">\</span>
+  -H <span class="s2">"X-Api-Key: mydeveloperkey"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Basic amJ1ZmZldHQ6YWJjZGVm"</span>
 </code></pre>
 
 <blockquote>
@@ -100,7 +101,7 @@
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code>POST /login</code></p>
+<p><code>GET /login</code></p>
 
 <h3 id="request-headers">Request Headers</h3>
 <table><thead><tr><th>Header</th>
@@ -109,77 +110,19 @@
 </tr></thead><tbody><tr><td>X-Api-Key</td>
 <td><code>api_key</code></td>
 <td>API key for your application</td>
+</tr><tr><td>Authorization</td>
+<td>Basic <code>base64(username + &quot;:&quot; + password)</code></td>
+<td>Base64-encoded username and password</td>
 </tr></tbody></table>
 <h3 id="request-parameters">Request Parameters</h3>
-<table><thead><tr><th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr></thead><tbody><tr><td>username</td>
-<td>none</td>
-<td>The username of the user to authenticate with</td>
-</tr><tr><td>password</td>
-<td>none</td>
-<td>The password of the user to authenticate with</td>
-</tr></tbody></table>
-<aside class="note">
-  These parameters can be combined and sent as an authorization header using Base64-encoding. See [Login with Authorization Header](#login-with-authorization-header) for more information.</aside>
 
-## Login with Authorization Header
-
-> Example Request
-
-```ruby
-# Note: These examples use a QuartinoRestClient object which has not yet been
-#       released as a separate library. If you desire the implementation for
-#       this, please email Scott at jaywir3@gmail.com.
-rest_client = QuartinoRestClient.new
-response = rest_client.login username, password
-```
-
-```shell
-curl _X POST "https://api.qr-invited-com/login" \
-  -H "X-Api-Key: mydeveloperkey" \
-  -H "Authorization: Basic amJ1ZmZldHQ6YWJjZGVm"
-```
-
-> Example Response
-
-```json
-
-{
-  "id": 888,
-  "name": "Jimmy Buffett",
-  "username": "jbuffett",
-  "email": "jimmy.buffett@margaritaville.com",
-  "role": 1,
-  "auth_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-  "auth_token_expire_date": "2016-04-18T14:46:27.000Z"
-}
-
-```
-
-This endpoint retrieves user data (including auth_token) for a specific user.
-
-### HTTP Request
-
-`POST /login`
-
-### Request Headers
-
-Header    | Value   | Description
---------- | ------- | -----------
-X-Api-Key | `api_key` | API key for your application |
-Authorization | Basic `base64(username + ":" + password)` | Base64-encoded username and password
-
-### Request Parameters
-
-No parameters are required for this API method.
-
-<aside class="note">
-  This login can also be sent in separate username/password format in the body. See [Login with Username and Password in Body](#login-with-username-and-password-in-body) for more information
-</aside>
+<p>No parameters are required for this API method.</p>
 
 <h1 id="users">Users</h1>
+
+<p>The User object describes an individual who can login to the QR-Invited system. It may be an account owner, a global administrator, or someone who has access to view the information on behalf of a particular client.</p>
+
+<p>Guests invited to an event through the QR-Invited system are not users.</p>
 
 <h2 id="get-all-users">Get All Users</h2>
 
@@ -238,7 +181,7 @@ No parameters are required for this API method.
 <th>Description</th>
 </tr></thead><tbody><tr><td>Authorization</td>
 <td>Bearer <code>auth_token</code></td>
-<td>Authorization token obtained via authentication mechanism (described above)</td>
+<td>Authorizatioqqwn token obtained via authentication mechanism (described above)</td>
 </tr><tr><td>X-UserId</td>
 <td><code>user_id</code></td>
 <td>User id of authenticated user</td>
@@ -282,7 +225,7 @@ No parameters are required for this API method.
 
 <p>Retrieves a specific user, by that user&#39;s id.</p>
 
-<aside class="warning">If the user authenticated is not an `admin`, then it's possible that a 403 Forbidden will be returned if that user is not associated with the account for which the requested user is associated.</aside>
+<aside class="warning">If the authenticated user is not an admin, then it's possible that a 403 Forbidden will be returned if the id given corresponds to a user that is not associated with one of the Account objects for which the authenticated user is an administrator.</aside>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -308,6 +251,74 @@ No parameters are required for this API method.
 </tr></thead><tbody><tr><td>ID</td>
 <td>The ID of the user to retrieve</td>
 </tr></tbody></table>
+
+<h1 id="accounts">Accounts</h1>
+
+<p>The Account object contains the data related to a particular client. Quartino does not store any data regarding client billing methods (e.g. credit card, checking account, etc...), but it does store logistical information about client organizations and contact information. An account is a representation of a client record within Quartino, and contains basic information about who is authorized to make changes to an instance of QR-Invited, the subdomain used to access the site for a particular client, and other information related to the client&#39;s ability to use the QR-Invited services.</p>
+
+<h2 id="get-all-accounts">Get All Accounts</h2>
+
+<blockquote>
+<p>Example Request</p>
+</blockquote>
+
+<pre class="highlight ruby"><code><span class="c1"># Note: These examples use a QuartinoRestClient object which has not yet been</span>
+<span class="c1">#       released as a separate library. If you desire the implementation for</span>
+<span class="c1">#       this, please email Scott at jaywir3@gmail.com.</span>
+<span class="n">rest_client</span> <span class="o">=</span> <span class="no">QuartinoRestClient</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">rest_client</span><span class="p">.</span><span class="nf">list_users</span><span class="p">(</span><span class="vi">@authenticated_user</span><span class="p">)</span>
+</code></pre>
+
+<pre class="highlight shell"><code>curl https://api.qr-invited-com/accounts <span class="se">\</span>
+  -H <span class="s2">"Authorization: Basic aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"</span> <span class="se">\</span>
+  -H <span class="s2">"X-UserId: 888"</span>
+</code></pre>
+
+<blockquote>
+<p>Example Response</p>
+</blockquote>
+
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">8193</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"owner_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"99"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"billing_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8912 Park Ave."</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"billing_city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Seattle"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"billing_state_prov"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WA"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"billing_postal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11111"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"last_successful_bill_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-03-06 17:01:44"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"plan_expiration_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-03-06 17:01:44"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"plan_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>Retrieve all users in the system, without authentication information.</p>
+
+<p>This is a listing of all users, but it does not include authentication information (e.g. passwords, password digests, authentication tokens, etc...).</p>
+
+<aside class="warning">This endpoint is available to all authenticated users of the system, but non-admins will only be able to view users within their respective `Account`(s).</aside>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code>GET https://api.qr-invited-com/users</code></p>
+
+<h3 id="request-headers">Request Headers</h3>
+
+<table><thead><tr><th>Header</th>
+<th>Value</th>
+<th>Description</th>
+</tr></thead><tbody><tr><td>Authorization</td>
+<td>Bearer <code>auth_token</code></td>
+<td>Authorizatioqqwn token obtained via authentication mechanism (described above)</td>
+</tr><tr><td>X-UserId</td>
+<td><code>user_id</code></td>
+<td>User id of authenticated user</td>
+</tr></tbody></table>
+
+<h3 id="request-parameters">Request Parameters</h3>
+
+<p>No parameters are required for this API call.</p>
 
 <h1 id="apps">Apps</h1>
 
@@ -377,6 +388,66 @@ No parameters are required for this API method.
 <h3 id="request-parameters">Request Parameters</h3>
 
 <p>No parameters are required for this API call.</p>
+
+<h2 id="get-a-specific-app">Get a Specific App</h2>
+
+<blockquote>
+<p>Example Request</p>
+</blockquote>
+
+<pre class="highlight ruby"><code><span class="c1"># Note: These examples use a QuartinoRestClient object which has not yet been</span>
+<span class="c1">#       released as a separate library. If you desire the implementation for</span>
+<span class="c1">#       this, please email Scott at jaywir3@gmail.com.</span>
+<span class="n">rest_client</span> <span class="o">=</span> <span class="no">QuartinoRestClient</span><span class="p">.</span><span class="nf">new</span>
+<span class="nb">id</span> <span class="o">=</span> <span class="mi">9082</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">rest_client</span><span class="p">.</span><span class="nf">get_app</span><span class="p">(</span><span class="vi">@authenticated_user</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+</code></pre>
+
+<pre class="highlight shell"><code>curl https://api.qr-invited-com/apps/9082 <span class="se">\</span>
+  -H <span class="s2">"Authorization: Basic aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"</span> <span class="se">\</span>
+  -H <span class="s2">"X-UserId: 888"</span>
+</code></pre>
+
+<blockquote>
+<p>Example Response</p>
+</blockquote>
+
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9082</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"app_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Quartino App"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"requester_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"some.user@qr-invited.com"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"api_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"30ef8ba034adeb693899b65d74e169dba40f3211"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Retrieves a specific app, by that app&#39;s id.</p>
+
+<aside class="warning">If the user authenticated is not an admin, then it's possible that a 403 Forbidden will be returned if the authenticated user is not the owner of the requested app.</aside>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code>GET https://api.qr-invited-com/apps/&lt;ID&gt;</code></p>
+
+<h3 id="request-headers">Request Headers</h3>
+
+<table><thead><tr><th>Header</th>
+<th>Value</th>
+<th>Description</th>
+</tr></thead><tbody><tr><td>Authorization</td>
+<td>Bearer <code>auth_token</code></td>
+<td>Authorization token obtained via authentication mechanism (described above)</td>
+</tr><tr><td>X-UserId</td>
+<td><code>user_id</code></td>
+<td>User id of authenticated user</td>
+</tr></tbody></table>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead><tr><th>Parameter</th>
+<th>Description</th>
+</tr></thead><tbody><tr><td>ID</td>
+<td>The ID of the app to retrieve</td>
+</tr></tbody></table>
 
 <h1 id="errors">Errors</h1>
 
